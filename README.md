@@ -37,6 +37,8 @@ GetComponentsFor(...) method:
 
 **Note:** all tests here were launched on [default sample](https://drive.google.com/open?id=1zLV8MmwiXazvpv-6LMWNbuewPabzBFD9) from the original task.
 
+**Results:** every method from API working **less than 1ms**.
+
 ### Run
 
 On ubuntu:
