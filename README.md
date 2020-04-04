@@ -31,7 +31,7 @@ The main problem here - dealing with interruptions and unexpected changes in fil
 
 If there is no changes between interruptions - program will continue the uploading. It provides **NOT to lose progress** in this  case:
 
-![]()
+![](./demo/Sample_Downloading.gif)
 
 If chages happened - the progress resets and uploading begins from the start:
 
