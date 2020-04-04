@@ -9,7 +9,7 @@ This repository contains the solution of the task for [internship](https://inter
 
 #### Testing Build(...) and Merge(...) methods
 <details>
-  <summary>**Expand!**</summary>
+  <summary>Expand!</summary>
 The main problem here - dealing with interruptions and unexpected changes in file between interruptions.
 
 If there is no changes between interruptions - program will continue the uploading. It provides **NOT to lose progress** in this  case:
@@ -27,7 +27,7 @@ ___
 
 
 <details>
-  <summary>**Expand!**</summary>
+  <summary>Expand!</summary>
 
 After **successful completion** of Build and Merge methods you are available to use API.
 
