@@ -10,6 +10,7 @@ This repository contains the solution of the task for [internship](https://inter
 #### Testing Build(...) and Merge(...) methods
 <details>
   <summary>Expand!</summary>
+<br>
 The main problem here - dealing with interruptions and unexpected changes in file between interruptions.
 
 If there is no changes between interruptions - program will continue the uploading. It provides **NOT to lose progress** in this  case:
@@ -28,7 +29,7 @@ ___
 
 <details>
   <summary>Expand!</summary>
-
+<br>
 After **successful completion** of Build and Merge methods you are available to use API.
 
 GetLocalAnchorUsages(...) method:
@@ -48,7 +49,7 @@ ___
 
 **Note:** all tests here were launched on [default sample](https://drive.google.com/open?id=1zLV8MmwiXazvpv-6LMWNbuewPabzBFD9) from the original task.
 
-**Results:** every method from API working **less than 1ms**.
+**Results:** every method from API working on default sample **LESS than 1 ms**.
 
 ### Run
 
