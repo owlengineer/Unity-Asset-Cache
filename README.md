@@ -30,8 +30,8 @@ ___
 <details>
   <summary>Expand!</summary>
 <br>
-After **successful completion** of Build and Merge methods you are available to use API.
-
+After successful completion of Build and Merge methods you are available to use API.
+<br>
 GetLocalAnchorUsages(...) method:
 
 ![](./demo/test1_api.gif)
