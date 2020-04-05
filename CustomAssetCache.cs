@@ -1,16 +1,9 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Reflection.Metadata;
 using System.Text;
 using System.Threading;
-using Microsoft.VisualBasic;
-using YamlDotNet;
 using ShellProgressBar;
-using YamlDotNet.Core.Tokens;
-using YamlDotNet.RepresentationModel;
 
 namespace IAssetCacheJB
 {
@@ -24,7 +17,6 @@ namespace IAssetCacheJB
 
     public class FilterState
     {
-        public string mCurrentLine = null;
         public ulong mLastGameObjectId = 0;
         public bool mComponents = false;
     }
@@ -253,7 +245,6 @@ namespace IAssetCacheJB
         
         public void Merge(string path, object result)
         {
-            // check another encoder
             string str = Encoding.UTF8.GetString((byte[]) Convert.ChangeType(result, typeof(byte[])));
             
             StringReader reader = new StringReader(str);

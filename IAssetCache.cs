@@ -5,7 +5,7 @@ namespace IAssetCacheJB
 {
     public interface IAssetCache
     {
-       /* object Build(string path, Action interruptChecker);
+        object Build(string path, Action interruptChecker);
 
         void Merge(string path, object result);
         
@@ -13,6 +13,6 @@ namespace IAssetCacheJB
         
         int GetGuidUsages(string guid);
         
-        IEnumerable<ulong> GetComponentsFor(ulong gameObjectAnchor);*/
+        IEnumerable<ulong> GetComponentsFor(ulong gameObjectAnchor);
     }
 }
