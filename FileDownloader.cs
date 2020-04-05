@@ -10,8 +10,6 @@ namespace IAssetCacheJB
         private const string GOOGLE_DRIVE_DOMAIN = "drive.google.com";
         private const string GOOGLE_DRIVE_DOMAIN2 = "https://drive.google.com";
 
-        // Normal example: FileDownloader.DownloadFileFromURLToPath( "http://example.com/file/download/link", @"C:\file.txt" );
-        // Drive example: FileDownloader.DownloadFileFromURLToPath( "http://drive.google.com/file/d/FILEID/view?usp=sharing", @"C:\file.txt" );
         public static FileInfo DownloadFileFromURLToPath(string url, string path)
         {
             if (url.StartsWith(GOOGLE_DRIVE_DOMAIN) || url.StartsWith(GOOGLE_DRIVE_DOMAIN2))
@@ -37,21 +35,14 @@ namespace IAssetCacheJB
                 }
         }
 
-        // Downloading large files from Google Drive prompts a warning screen and
-        // requires manual confirmation. Consider that case and try to confirm the download automatically
-        // if warning prompt occurs
         private static FileInfo DownloadGoogleDriveFileFromURLToPath(string url, string path)
         {
-            // You can comment the statement below if the provided url is guaranteed to be in the following format:
-            // https://drive.google.com/uc?id=FILEID&export=download
             url = GetGoogleDriveDownloadLinkFromUrl(url);
 
             using (CookieAwareWebClient webClient = new CookieAwareWebClient())
             {
                 FileInfo downloadedFile;
 
-                // Sometimes Drive returns an NID cookie instead of a download_warning cookie at first attempt,
-                // but works in the second attempt
                 for (int i = 0; i < 2; i++)
                 {
                     downloadedFile = DownloadFileFromURLToPath(url, path, webClient);
@@ -94,10 +85,6 @@ namespace IAssetCacheJB
             }
         }
 
-        // Handles 3 kinds of links (they can be preceeded by https://):
-        // - drive.google.com/open?id=FILEID
-        // - drive.google.com/file/d/FILEID/view?usp=sharing
-        // - drive.google.com/uc?id=FILEID&export=download
         public static string GetGoogleDriveDownloadLinkFromUrl(string url)
         {
             int index = url.IndexOf("id=");
