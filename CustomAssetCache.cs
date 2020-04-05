@@ -1,16 +1,8 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Reflection.Metadata;
 using System.Text;
 using System.Threading;
-using Microsoft.VisualBasic;
-using YamlDotNet;
-using ShellProgressBar;
-using YamlDotNet.Core.Tokens;
-using YamlDotNet.RepresentationModel;
 
 namespace IAssetCacheJB
 {
@@ -24,7 +16,6 @@ namespace IAssetCacheJB
 
     public class FilterState
     {
-        public string mCurrentLine = null;
         public ulong mLastGameObjectId = 0;
         public bool mComponents = false;
     }
@@ -78,15 +69,11 @@ namespace IAssetCacheJB
         // filter helper
         private FilterState mFilterState;
         
-        // progress bar
-        private ProgressBar mPBar;
-
         public CustomAssetCache()
         {
             mFileStream = null;
             mData = null;
             mState = null;
-            mPBar = null;
             mFileInfo = null;
             mAnchorUses = new Dictionary<ulong, int>();
             mResourcesUses = new Dictionary<string, int>();
@@ -112,32 +99,6 @@ namespace IAssetCacheJB
             mData = new byte[mFileStream.Length];
             mState = new CacheState((int)mFileStream.Length, UnityHelper.chunk_2MB);
         }
-
-        private void PrepareProgressBar()
-        {
-            var options = new ProgressBarOptions
-            {
-                BackgroundColor = ConsoleColor.DarkGray,
-                BackgroundCharacter = '\u2593'
-            };
-
-            int totalTicks = (int)(mFileStream.Length / mState.currentChunkSize) + 1;
-            mPBar = new ProgressBar(totalTicks, "showing off styling", options);
-            Console.WriteLine("Memory buffer size: " + ((double)mState.currentChunkSize / UnityHelper.MB) + " MB");
-        }
-
-        public void SetProgressBarErrorState(string e)
-        {
-            mPBar.ForegroundColor = ConsoleColor.Red;
-            mPBar.Tick(mPBar.CurrentTick, e);
-        }
-        
-        private void ProgressBarTick()
-        {    
-            mPBar.ForegroundColor = ConsoleColor.Green;
-            mPBar.Tick("Uploaded " + Math.Round((double)mState.countBytesRead/UnityHelper.MB, 2) + "MB of " + Math.Round((double)mData.Length/UnityHelper.MB, 2) + "MB" );
-        }
-        
         public object Build(string path, Action interruptChecker)
 
         {
@@ -147,14 +108,9 @@ namespace IAssetCacheJB
 
             if (AssetFileChanged(path))
             {
-                SetProgressBarErrorState("File changed during interruption! Resetting progress...");
                 Thread.Sleep(2500);
                 Initialize(path);
-                mPBar.Tick(0);
             } 
-
-            if (mPBar == null)
-                PrepareProgressBar();
             
             while (mState.countBytesToRead > 0)
             {
@@ -166,7 +122,6 @@ namespace IAssetCacheJB
                 int n = mFileStream.Read(mData, mState.countBytesRead, mState.currentChunkSize);
                 mState.recalcState();
                 
-                ProgressBarTick();
                 Thread.Sleep(10);
             }
             return mData;
@@ -253,12 +208,9 @@ namespace IAssetCacheJB
         
         public void Merge(string path, object result)
         {
-            // check another encoder
             string str = Encoding.UTF8.GetString((byte[]) Convert.ChangeType(result, typeof(byte[])));
             
             StringReader reader = new StringReader(str);
-
-            mPBar.Tick(mPBar.CurrentTick, "Filtering YAML document...");
 
             int i = 0;
             var line = reader.ReadLine();

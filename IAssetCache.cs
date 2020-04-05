@@ -5,14 +5,14 @@ namespace IAssetCacheJB
 {
     public interface IAssetCache
     {
-       /* object Build(string path, Action interruptChecker);
+        public object Build(string path, Action interruptChecker);
 
-        void Merge(string path, object result);
+        public void Merge(string path, object result);
         
-        int GetLocalAnchorUsages(ulong anchor);
+        public int GetLocalAnchorUsages(ulong anchor);
         
-        int GetGuidUsages(string guid);
+        public int GetGuidUsages(string guid);
         
-        IEnumerable<ulong> GetComponentsFor(ulong gameObjectAnchor);*/
+        public IEnumerable<ulong> GetComponentsFor(ulong gameObjectAnchor);
     }
 }
